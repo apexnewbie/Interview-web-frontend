@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
 import React from 'react';
+import './Record.css';
 import RecordRTC, { getSeekableBlob, invokeSaveAsDialog } from 'recordrtc';
 import { captureUserMedia, getFileName } from './RecordFunction';
 
@@ -67,7 +67,7 @@ class Record extends React.Component<any, any> {
     }
 
     render(): JSX.Element {
-        if (this.state.recording == true) {
+        if (this.state.recording === true) {
             return (
                 <div className='Record'>
                     <button
