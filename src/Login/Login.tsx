@@ -10,9 +10,12 @@ import './login.css';
 import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
+const baseURL =
+    process.env.REACT_APP_BACKEND_URL || 'https://socket.realdqhl.com';
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
+
     const [key, setKey] = useState<string>('login');
     const [registerEmail, setRegisterEmail] = useState<string>('');
     const [registerPass, setRegisterPass] = useState<string>('');
@@ -29,7 +32,7 @@ const Login: React.FC = () => {
     const [variantLogin, setVariantLogin] = useState<string>('danger');
     const handleRegister = () => {
         axios
-            .post('https://socket.realdqhl.com/register', {
+            .post(baseURL + '/register', {
                 email: registerEmail,
                 password: registerPass,
             })
@@ -49,7 +52,7 @@ const Login: React.FC = () => {
 
     const handleLogin = () => {
         axios
-            .post('https://socket.realdqhl.com/login', {
+            .post(baseURL + '/login', {
                 email: loginEmail,
                 password: loginPass,
             })
@@ -59,7 +62,8 @@ const Login: React.FC = () => {
                 setVariantLogin('success');
                 setErrorLoginMessage('Login success');
                 localStorage.setItem('token', response.data.token);
-                setTimeout(() => navigate('/home'), 1500);
+                localStorage.setItem('user', loginEmail);
+                setTimeout(() => navigate('/home'), 500);
             })
             .catch((error) => {
                 if (error.response.status === 422) {
